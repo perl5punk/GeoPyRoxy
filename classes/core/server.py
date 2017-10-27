@@ -12,7 +12,7 @@ class GeoHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         return 'might be something'
 
     def get_REVERSE(self):
-        return 'or something else'
+        return {"json": "might work"}
 
     def process_request(self):
 
@@ -34,14 +34,16 @@ class GeoHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         enc = sys.getfilesystemencoding()
         data = self.process_request()
+        content_type = 'text/plain'
 
         if type(data) is dict:
-            data = json.encode(data)
+            data = json.dumps(data)
+            content_type = 'application/json'
 
         encoded = ('\n\n'+data).encode(enc, 'surrogateescape')
 
         self.send_response(200)
-        self.send_header("Content-type", "text/plain; charset=%s" % enc)
+        self.send_header("Content-type", content_type+"; charset=%s" % enc)
         self.send_header("Content-Length", str(len(encoded)))
         self.end_headers()
 
