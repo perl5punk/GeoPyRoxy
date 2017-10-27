@@ -14,7 +14,7 @@ class GoogleGeocoder(classes.integrations.BaseGeocoder.BaseGeocoder):
         return self.host
 
     def get_reverse_geocode_url(self, coords):
-        return self.baseUrl + '&address=' + coords
+        return self.baseUrl + '&latlng=' + coords
 
     # 1600+Amphitheatre+Parkway,+Mountain+View,+CA&key='+GOOGLE_API_KEY
 
