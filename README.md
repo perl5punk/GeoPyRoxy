@@ -18,7 +18,7 @@ This will help you interface with multiple GeoCoding Sources in one place, have 
  ## RESTful Endpoints and Usage
  
  - GET /geocode/{address}
- - GET /reverse/{longitude}/{latitude}
+ - GET /reverse/{latitude},{longitude}
  
  ##### Example
  
