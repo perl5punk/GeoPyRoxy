@@ -6,7 +6,7 @@ This will help you interface with multiple GeoCoding Sources in one place, have 
 
 1. Install Python
 2. Fork and Clone the Repo
-3. Obtain API Keys for Geocode services and add to configuration
+3. Obtain API Keys for Geocode services and add to __config.py__
     https://developer.here.com/documentation/geocoder/topics/quick-start-geocode.html
     https://developers.google.com/maps/documentation/geocoding/get-api-key
 4. Start Server (Defaults to Port 8000)
