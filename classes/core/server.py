@@ -5,19 +5,24 @@ import json
 import shutil
 import sys
 
+import classes.interfaces.geocoder
+import config
+
 
 class GeoHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
-    def get_GEOCODE(self):
-        return 'might be something'
+    geocoder = classes.interfaces.geocoder.GeocoderServiceInterface(config.GeoPyRoxyConfig.PREFERRED_SERVICE_ORDER)
 
-    def get_REVERSE(self):
-        return {"json": "might work"}
+    def get_GEOCODE(self, path):
+        return self.geocoder.process_geocode_request('coords_from_address', path)
+
+    def get_REVERSE(self, path):
+        return self.geocoder.process_geocode_request('address_from_coords', path)
 
     def process_request(self):
 
+        request_response = ''
         request_path = self.path.split('/')
-
         rest_method = self.command.lower()+'_'+request_path[1].upper()
 
         if not hasattr(self, rest_method):
@@ -25,10 +30,14 @@ class GeoHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 404,
                 "Not Found (%r)" % rest_method)
         else:
-            method = getattr(self, rest_method)
-            return method()
+            try:
+                method = getattr(self, rest_method)
+                print('calling '+rest_method)
+                request_response = method(request_path)
+            except ValueError as e:
+                request_response = format(str(e))
 
-        return ''
+        return request_response
 
     def do_GET(self):
 
